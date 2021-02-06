@@ -1,0 +1,22 @@
+{
+  "missingWords": {
+    "name": "MissingWords",
+    "configs":
+    {
+      "level": {
+        "name": "Level",
+        "type": "RANGE",
+        "props": {
+          "min": {
+            "type": "INTEGER",
+            "value": 1
+          },
+          "max": {
+            "type": "INTEGER",
+            "value": 5
+          }
+        }
+      }
+    }
+  }
+}
