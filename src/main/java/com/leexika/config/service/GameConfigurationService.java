@@ -13,6 +13,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.lang.reflect.Type;
+import java.util.Collection;
 import java.util.Map;
 
 @Service
@@ -40,5 +41,9 @@ public class GameConfigurationService {
 
     public GameConfiguration get(GameType gameType) {
         return configMap.get(gameType);
+    }
+
+    public Collection<GameConfiguration> getAll() {
+        return configMap.values();
     }
 }
