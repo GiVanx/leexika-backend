@@ -33,7 +33,9 @@ public class TemplateStageDeserializer extends JsonDeserializer<TemplateStage> {
         JsonNode node = oc.readTree(jsonParser);
 
         TemplateStage stage = new TemplateStage();
-        stage.setId(node.get("id").asLong());
+        if (node.has("id")) {
+            stage.setId(node.get("id").asLong());
+        }
         GameType templateType = GameType.valueOf(node.get("name").asText());
         stage.setType(templateType);
 

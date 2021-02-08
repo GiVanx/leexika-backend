@@ -19,4 +19,6 @@ public class Template {
 
     @OneToMany(cascade = CascadeType.ALL)
     private List<TemplateStage> stages;
+
+    private String text;
 }
