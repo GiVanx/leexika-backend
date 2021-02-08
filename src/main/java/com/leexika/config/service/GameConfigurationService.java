@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.leexika.config.model.ConfigurationProperty;
 import com.leexika.config.model.GameConfiguration;
+import com.leexika.config.model.GameType;
 import com.leexika.config.utils.CustomConfigurationPropertyDeserializer;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +20,7 @@ public class GameConfigurationService {
 
     private static final String GAME_CONFIG_PATH = "game-config.json";
     private Gson gson;
-    private Map<String, GameConfiguration> configMap;
+    private Map<GameType, GameConfiguration> configMap;
 
     public GameConfigurationService() {
         Type t = new TypeToken<ConfigurationProperty>() {
@@ -32,12 +33,12 @@ public class GameConfigurationService {
         InputStream is = classLoader.getResourceAsStream(GAME_CONFIG_PATH);
         Reader reader = new InputStreamReader(is);
 
-        Type type = new TypeToken<Map<String, GameConfiguration>>() {
+        Type type = new TypeToken<Map<GameType, GameConfiguration>>() {
         }.getType();
         configMap = gson.fromJson(reader, type);
     }
 
-    public GameConfiguration get(String configName) {
-        return configMap.get(configName);
+    public GameConfiguration get(GameType gameType) {
+        return configMap.get(gameType);
     }
 }
