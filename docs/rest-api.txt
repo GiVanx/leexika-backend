@@ -1,0 +1,246 @@
+
+========= Configuration =========
+
+1. Get game configurations.
+
+GET /api/game/configurations
+
+[
+	{
+		type: 'LEAKY_TEXT',
+		name: 'LeakyText',
+		info: 'Some short description of the game',
+		configs: {
+			name: 'LEVEL',
+			info: 'Some short description of this game configuration',
+			type: 'RANGE',
+			props: {
+				min: 1,
+				max: 5
+			}
+		}
+	}
+]
+
+========= Game Templates =========
+
+1. Get all templates.
+
+GET /api/game/templates
+
+[
+	{
+        "id": 4,
+        "name": "Template#1",
+        "stages": [
+            {
+                "id": 5,
+                "type": "MISSING_WORDS",
+                "name": "MissingWords",
+                "configs": {
+                    "level": 3
+                }
+            }
+        ],
+        "text": "Some text here"
+    }
+]
+
+2. Create a template.
+
+CREATE /api/game/templates
+
+Request:
+
+{
+    "name": "Template#1",
+    "stages": [
+        {
+            "type": "MISSING_WORDS",
+            "configs": {
+                "level": 3
+            }
+        }
+    ],
+    "text": "Some text here"
+}
+
+Response is as request just with ids.
+
+3. Edit a template.
+
+PUT /api/game/template/{templateId}
+
+Request / Response:
+{
+	id: 1,
+	name: 'Template#1',
+	stages: [
+		{
+			id: 1,
+			type: 'LEAKY_TEXT',
+			config: [
+				{
+					id: 1,
+					name: 'LEVEL',
+					value: 3
+				}
+			]
+		}
+	],
+	text: 'Some text here' // can also be null
+}
+
+4. Delete a template.
+
+DELETE /api/game/template/{templateId}
+
+
+========= Games =========
+
+1. Start a staged game.
+
+Request:
+
+POST /api/game
+
+{
+	template: 1
+}
+
+Response:
+
+{
+	id: 1,
+	status: 'IN_PROGRESS',
+	currentStage: 
+	{
+		id: 1,
+		type: 'MISSING_WORDS',
+		name: 'LeakyText',
+		status: 'IN_PROGRESS'
+	}
+}
+
+3. Go to next stage.
+
+Request:
+
+PUT /api/game/{gameId}/next
+
+no body
+
+Response:
+
+{
+	id: 1,
+	status: 'IN_PROGRESS',
+	currentStage: 
+	{
+		id: 2,
+		type: 'SENTENCES',
+		name: 'Sentences',
+		status: 'IN_PROGRESS'
+	}
+}
+
+404 Game#1 not found.
+401 Game#1 is already finished.
+401 The current stage was not finished yet.
+
+=== LeakyTextGame API ===
+
+
+1. Get game
+
+GET /api/game/leaky-text/{gameId}
+
+{
+	id: 1,
+	textWithGaps: [
+		{
+			id: 1,
+			word: 'cacao',
+			position: 1
+		}
+	],
+	missingWords: [
+		{
+			id: 2,
+			word: 'beer'
+		}
+	]
+}
+
+2. Check game
+
+PUT /api/game/leaky-text/{gameId}/check
+		
+{
+	id: 1,
+	textWithGaps: [
+		{
+			id: 1,
+			word: 'cacao',
+			position: 1,
+			status: WRONG // or CORRECT
+		}
+	],
+	missingWords: [
+		{
+			id: 2,
+			word: 'beer'
+		}
+	]
+}
+
+3. Save game
+
+PUT /api/game/leaky-text/{gameId}
+		
+{
+	id: 1,
+	textWithGaps: [
+		{
+			id: 1,
+			word: 'cacao',
+			position: 1
+		}
+	],
+	missingWords: [
+		{
+			id: 2,
+			word: 'beer'
+		}
+	]
+}
+
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+
+
